@@ -57,11 +57,13 @@ URL hash-loads all work.
 
 - Number 1–10 toggle UI in `js/views/settings.js`, persisted to `localStorage` (deliberately not
   the backend yet, so this step is validatable without Functions/Blobs).
-- `js/views/play.js` reads enabled numbers from `localStorage` and constrains both equation factors
-  to that set. Settings UI enforces a minimum of 2 enabled numbers.
+- `js/views/play.js` reads enabled numbers (times tables) from `localStorage`: one equation factor
+  is drawn from the enabled set, the other is a random 1–10, with position randomized for variety.
+  Settings UI enforces a minimum of 2 enabled numbers.
 
-**Validate:** toggle some numbers off, play, confirm generated equations only use enabled numbers;
-try disabling down to 1 and confirm it's blocked; reload the page and confirm settings persisted.
+**Validate:** toggle some numbers off, play, confirm every equation includes at least one enabled
+table; try disabling down to 1 and confirm it's blocked; reload the page and confirm settings
+persisted.
 
 ### Step 4 — PIN auth + Netlify Functions + Blobs backend
 

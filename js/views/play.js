@@ -1,3 +1,5 @@
+import { getEnabledNumbers } from "../store.js";
+
 const BALL_COLORS = [
   "#ff6b6b",
   "#ffa94d",
@@ -214,8 +216,11 @@ export function renderPlay(container) {
   }
 
   function nextQuestion() {
-    const a = randInt(1, 10);
-    const b = randInt(1, 10);
+    const table = choice(getEnabledNumbers());
+    const other = randInt(1, 10);
+    const swap = Math.random() < 0.5;
+    const a = swap ? other : table;
+    const b = swap ? table : other;
     const correct = a * b;
     currentAnswer = correct;
 

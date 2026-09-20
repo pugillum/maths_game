@@ -44,7 +44,8 @@ body {
 /* Landing + placeholder views */
 
 .landing,
-.placeholder-view {
+.placeholder-view,
+.settings-view {
   flex: 1 1 auto;
   display: flex;
   flex-direction: column;
@@ -88,6 +89,42 @@ body {
   font-weight: 600;
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
   margin: 0;
+}
+
+.settings-title {
+  font-size: clamp(1.6rem, 7vw, 2.2rem);
+  font-weight: 800;
+  margin: 0;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+}
+
+.settings-hint {
+  margin: 0;
+  font-size: 0.95rem;
+  opacity: 0.85;
+}
+
+.number-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.8rem;
+  width: min(360px, 90vw);
+}
+
+.number-toggle {
+  aspect-ratio: 1;
+  border: none;
+  border-radius: 50%;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.15);
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.number-toggle.active {
+  background: #1864ab;
 }
 
 .home-link {

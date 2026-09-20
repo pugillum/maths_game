@@ -67,15 +67,18 @@ Contains 3 buttons centered:
 The page the game currently displays, but taking the settings into account (see below) and
 tracking session time (see [Retaining data](#retaining-data)).
 
-Equation generation reads `settings.enabledNumbers` and restricts both `a` and `b` to that set. If
-fewer than 2 numbers are somehow enabled, fall back to the full 1-10 range as a safety net so the
-game never gets stuck unable to generate a question.
+Equation generation reads `settings.enabledNumbers`, which represent the times tables the player is
+practicing, not a shared pool for both factors: one factor is drawn from the enabled set (the
+table), the other is a random number 1-10 (which position each occupies is randomized, for
+variety). E.g. enabling 8 makes 1x8, 2x8, ... 10x8 all eligible questions. If fewer than 2 numbers
+are somehow enabled, fall back to the full 1-10 range as a safety net so the game never gets stuck
+unable to generate a question.
 
 ### The settings page
 
 Contains a list of numbers, 1 - 10, displayed as buttons. The player can toggle each number on or
-off; enabled numbers are the ones that may appear as either factor on the Play page. At least 2
-numbers must stay enabled at all times - the UI blocks disabling below that - so equations remain
+off; enabled numbers are the times tables practiced on the Play page (see above). At least 2 numbers
+must stay enabled at all times - the UI blocks disabling below that - so equations remain
 generatable. Changes save immediately (see [Retaining data](#retaining-data)).
 
 ### The stats page
@@ -127,7 +130,7 @@ A single fixed blob key (e.g. `player-data`) holds:
 }
 ```
 
-- `enabledNumbers` - the numbers toggled on in Settings.
+- `enabledNumbers` - the times tables toggled on in Settings.
 - `days` - a map of date to total minutes played that day. Minutes are aggregated per day (not
   stored per session) to keep the blob small.
 
