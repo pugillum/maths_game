@@ -1,3 +1,4 @@
+import { ensureAuthenticated } from "./auth.js";
 import { renderLanding } from "./views/landing.js";
 import { renderPlay } from "./views/play.js";
 import { renderSettings } from "./views/settings.js";
@@ -17,12 +18,14 @@ function currentRoute() {
   return location.hash.replace(/^#\/?/, "");
 }
 
-function navigate() {
+async function navigate() {
   if (typeof cleanup === "function") {
     cleanup();
   }
   cleanup = null;
   app.innerHTML = "";
+
+  await ensureAuthenticated(app);
 
   const route = currentRoute();
   const render = routes[route];

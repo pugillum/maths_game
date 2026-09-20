@@ -1,4 +1,7 @@
-import { getEnabledNumbers } from "../store.js";
+import { loadData, saveData } from "../api.js";
+import { ALL_NUMBERS, todayString } from "../store.js";
+
+const HEARTBEAT_MS = 30000;
 
 const BALL_COLORS = [
   "#ff6b6b",
@@ -90,6 +93,34 @@ export function renderPlay(container) {
 
   let locked = false; // true once correct answer chosen, until next question loads
   let currentAnswer = null;
+  let enabledNumbers = ALL_NUMBERS;
+
+  loadData()
+    .then((data) => {
+      if (Array.isArray(data.settings?.enabledNumbers) && data.settings.enabledNumbers.length >= 2) {
+        enabledNumbers = data.settings.enabledNumbers;
+      }
+    })
+    .catch(() => {});
+
+  let lastHeartbeat = Date.now();
+
+  function flushPlaytime() {
+    const now = Date.now();
+    const elapsedMinutes = (now - lastHeartbeat) / 60000;
+    lastHeartbeat = now;
+    if (elapsedMinutes > 0) {
+      saveData({ addMinutes: elapsedMinutes, date: todayString() }).catch(() => {});
+    }
+  }
+
+  const heartbeatId = setInterval(flushPlaytime, HEARTBEAT_MS);
+
+  function onVisibilityChange() {
+    if (document.visibilityState === "hidden") flushPlaytime();
+  }
+  document.addEventListener("visibilitychange", onVisibilityChange);
+  window.addEventListener("pagehide", flushPlaytime);
 
   function clearBoard() {
     playArea.querySelectorAll(".ball").forEach((b) => b.remove());
@@ -216,7 +247,7 @@ export function renderPlay(container) {
   }
 
   function nextQuestion() {
-    const table = choice(getEnabledNumbers());
+    const table = choice(enabledNumbers);
     const other = randInt(1, 10);
     const swap = Math.random() < 0.5;
     const a = swap ? other : table;
@@ -234,4 +265,11 @@ export function renderPlay(container) {
   }
 
   nextQuestion();
+
+  return function cleanup() {
+    clearInterval(heartbeatId);
+    document.removeEventListener("visibilitychange", onVisibilityChange);
+    window.removeEventListener("pagehide", flushPlaytime);
+    flushPlaytime();
+  };
 }

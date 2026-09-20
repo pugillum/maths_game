@@ -1,6 +1,10 @@
 {
   "name": "maths-game",
   "private": true,
+  "type": "module",
+  "dependencies": {
+    "@netlify/blobs": "^8"
+  },
   "devDependencies": {
     "netlify-cli": "^27"
   }

@@ -1,8 +1,7 @@
-import { ALL_NUMBERS, MIN_ENABLED, getEnabledNumbers, setEnabledNumbers } from "../store.js";
+import { loadData, saveData } from "../api.js";
+import { ALL_NUMBERS, MIN_ENABLED } from "../store.js";
 
 export function renderSettings(container) {
-  const enabled = new Set(getEnabledNumbers());
-
   container.innerHTML = `
     <a class="home-link" href="#/">&larr; Home</a>
     <div class="settings-view">
@@ -14,6 +13,7 @@ export function renderSettings(container) {
   `;
 
   const grid = container.querySelector(".number-grid");
+  let enabled = new Set(ALL_NUMBERS);
 
   function draw() {
     grid.innerHTML = "";
@@ -35,9 +35,16 @@ export function renderSettings(container) {
     } else {
       enabled.add(n);
     }
-    setEnabledNumbers(Array.from(enabled));
     draw();
+    saveData({ settings: { enabledNumbers: Array.from(enabled) } }).catch(() => {});
   }
 
   draw();
+
+  loadData()
+    .then((data) => {
+      enabled = new Set(data.settings.enabledNumbers);
+      draw();
+    })
+    .catch(() => {});
 }
