@@ -8,12 +8,16 @@ export function renderSettings(container) {
       <h1 class="settings-title">Settings</h1>
       <p class="settings-hint">Choose which times tables to practice.</p>
       <div class="number-grid"></div>
-      <p class="settings-hint">At least ${MIN_ENABLED} tables must stay on.</p>
+      <p class="settings-hint">At least ${MIN_ENABLED} table${MIN_ENABLED === 1 ? "" : "s"} must stay on.</p>
     </div>
   `;
 
   const grid = container.querySelector(".number-grid");
   let enabled = new Set(ALL_NUMBERS);
+  // Ignore clicks until the saved selection has loaded, so we never save over it with the defaults.
+  let loaded = false;
+  // Saves are chained so they reach the server in click order and the last click wins.
+  let saving = Promise.resolve();
 
   function draw() {
     grid.innerHTML = "";
@@ -29,6 +33,7 @@ export function renderSettings(container) {
   }
 
   function toggle(n) {
+    if (!loaded) return;
     if (enabled.has(n)) {
       if (enabled.size <= MIN_ENABLED) return;
       enabled.delete(n);
@@ -36,7 +41,8 @@ export function renderSettings(container) {
       enabled.add(n);
     }
     draw();
-    saveData({ settings: { enabledNumbers: Array.from(enabled) } }).catch(() => {});
+    const enabledNumbers = Array.from(enabled);
+    saving = saving.then(() => saveData({ settings: { enabledNumbers } })).catch(() => {});
   }
 
   draw();
@@ -46,5 +52,8 @@ export function renderSettings(container) {
       enabled = new Set(data.settings.enabledNumbers);
       draw();
     })
-    .catch(() => {});
+    .catch(() => {})
+    .finally(() => {
+      loaded = true;
+    });
 }

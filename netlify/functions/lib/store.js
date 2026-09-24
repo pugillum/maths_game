@@ -8,7 +8,9 @@ export const DEFAULT_DATA = {
 };
 
 export function playerStore() {
-  return getStore("player-data");
+  // Strong consistency: save-data does read-modify-write, so a stale read would write old
+  // settings back over a fresh change (e.g. a playtime save right after a settings toggle).
+  return getStore({ name: "player-data", consistency: "strong" });
 }
 
 export function isAuthorized(req) {

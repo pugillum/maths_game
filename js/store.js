@@ -1,5 +1,5 @@
 export const ALL_NUMBERS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-export const MIN_ENABLED = 2;
+export const MIN_ENABLED = 1;
 
 export function formatDate(d) {
   const yyyy = d.getFullYear();

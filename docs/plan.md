@@ -59,7 +59,7 @@ URL hash-loads all work.
   the backend yet, so this step is validatable without Functions/Blobs).
 - `js/views/play.js` reads enabled numbers (times tables) from `localStorage`: one equation factor
   is drawn from the enabled set, the other is a random 1–10, with position randomized for variety.
-  Settings UI enforces a minimum of 2 enabled numbers.
+  Settings UI enforces a minimum of 1 enabled number.
 
 **Validate:** toggle some numbers off, play, confirm every equation includes at least one enabled
 table; try disabling down to 1 and confirm it's blocked; reload the page and confirm settings

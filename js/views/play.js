@@ -1,5 +1,5 @@
 import { loadData, saveData } from "../api.js";
-import { ALL_NUMBERS, todayString } from "../store.js";
+import { ALL_NUMBERS, MIN_ENABLED, todayString } from "../store.js";
 
 const HEARTBEAT_MS = 30000;
 
@@ -95,13 +95,15 @@ export function renderPlay(container) {
   let currentAnswer = null;
   let enabledNumbers = ALL_NUMBERS;
 
+  // The first question waits for settings so it's drawn from the player's chosen tables.
   loadData()
     .then((data) => {
-      if (Array.isArray(data.settings?.enabledNumbers) && data.settings.enabledNumbers.length >= 2) {
+      if (Array.isArray(data.settings?.enabledNumbers) && data.settings.enabledNumbers.length >= MIN_ENABLED) {
         enabledNumbers = data.settings.enabledNumbers;
       }
     })
-    .catch(() => {});
+    .catch(() => {})
+    .finally(() => nextQuestion());
 
   let lastHeartbeat = Date.now();
 
@@ -263,8 +265,6 @@ export function renderPlay(container) {
 
     placeBalls(values);
   }
-
-  nextQuestion();
 
   return function cleanup() {
     clearInterval(heartbeatId);

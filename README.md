@@ -21,6 +21,26 @@ gate has something to check against:
 echo "PLAYER_PIN=1234" > .env
 ```
 
+### Testing locally
+
+With `just serve` running, open `http://localhost:8888` and enter the PIN from `.env`. Then check:
+
+- **Settings:** turn tables off until one is left. The last one can't be turned off. Reload the page:
+  your selection should still be there.
+- **Play:** every equation, including the first, should use one of the tables you left on.
+- **Stats:** play for a minute or two, then open Stats and check that today's square has filled in.
+
+To see what's stored, run this in a second terminal while `just serve` is running:
+
+```
+just data
+```
+
+It prints the stored JSON (`settings.enabledNumbers` and the minutes played per day), read from local
+Blobs rather than production. It needs [`jq`](https://jqlang.org/).
+
+`just serve` stops any old dev server still using port 3999 or 8888, so you can safely run it again.
+
 ## Deploying to Netlify
 
 This app needs Netlify Functions and Blobs, not just static hosting, so the drag-and-drop upload UI

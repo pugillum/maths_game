@@ -77,7 +77,7 @@ unable to generate a question.
 ### The settings page
 
 Contains a list of numbers, 1 - 10, displayed as buttons. The player can toggle each number on or
-off; enabled numbers are the times tables practiced on the Play page (see above). At least 2 numbers
+off; enabled numbers are the times tables practiced on the Play page (see above). At least 1 number
 must stay enabled at all times - the UI blocks disabling below that - so equations remain
 generatable. Changes save immediately (see [Retaining data](#retaining-data)).
 
@@ -135,7 +135,9 @@ A single fixed blob key (e.g. `player-data`) holds:
   stored per session) to keep the blob small.
 
 `save-data.js` performs an authenticated read-modify-write; `load-data.js` performs an
-authenticated read. Both settings changes and playtime updates go through `save-data.js`.
+authenticated read. The store is opened with `consistency: "strong"`. With the default eventual
+consistency, a playtime save shortly after a settings change could read the old blob and write
+the old settings back. Both settings changes and playtime updates go through `save-data.js`.
 
 ### Session time tracking
 
