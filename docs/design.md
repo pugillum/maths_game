@@ -145,6 +145,17 @@ While the Play view is active, elapsed time is tracked with a periodic heartbeat
 adds elapsed minutes to today's `days` entry via `save-data.js`, plus a final flush on
 `visibilitychange`/`pagehide` so a session isn't lost if the tab is closed abruptly.
 
+### Backups
+
+The blob is the only copy of the play history, so it's backed up to a separate **private** repo
+(`pugillum/2026_maths_game_data`), keeping play data out of this public repo. A scheduled GitHub
+Action there fetches `load-data` once a day and commits `player-data.json` if it has changed. Git
+history serves as the backup history. The Action rejects malformed responses, so a failed fetch
+never overwrites a good backup.
+
+To restore, `restore-data.js` (PIN-gated POST) overwrites the blob with a posted backup; run it
+with `just restore <site-url> [path-to-player-data.json]`.
+
 ## Extra design questions
 
 - ~~Is a single HTML page optimal for Netlify use?~~ Resolved above under

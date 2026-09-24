@@ -23,3 +23,10 @@ data:
         exit 1
     fi
     echo "$response" | jq .
+
+# Overwrite the blob with a backup, e.g. `just restore https://<site>.netlify.app`
+restore url="http://localhost:8888" file="../2026_maths_game_data/player-data.json":
+    #!/usr/bin/env bash
+    set -euo pipefail
+    curl -sf -X POST -H "x-player-pin: $PLAYER_PIN" -H "content-type: application/json" \
+        --data @"{{file}}" "{{url}}/.netlify/functions/restore-data" | jq .
