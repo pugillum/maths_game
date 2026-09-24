@@ -46,7 +46,8 @@ body {
 .landing,
 .placeholder-view,
 .settings-view,
-.pin-gate {
+.pin-gate,
+.stats-view {
   flex: 1 1 auto;
   display: flex;
   flex-direction: column;
@@ -92,7 +93,9 @@ body {
   margin: 0;
 }
 
-.pin-title {
+.pin-title,
+.settings-title,
+.stats-title {
   font-size: clamp(1.6rem, 7vw, 2.2rem);
   font-weight: 800;
   margin: 0;
@@ -131,13 +134,6 @@ body {
   margin: 0;
 }
 
-.settings-title {
-  font-size: clamp(1.6rem, 7vw, 2.2rem);
-  font-weight: 800;
-  margin: 0;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
-}
-
 .settings-hint {
   margin: 0;
   font-size: 0.95rem;
@@ -165,6 +161,74 @@ body {
 
 .number-toggle.active {
   background: #1864ab;
+}
+
+.streak-text {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.stats-grid-wrap {
+  max-width: 100%;
+  overflow-x: auto;
+  padding-bottom: 0.25rem;
+}
+
+.stats-graph {
+  display: inline-grid;
+  column-gap: 3px;
+  row-gap: 3px;
+  align-items: center;
+}
+
+.stats-corner {
+  width: 26px;
+}
+
+.stats-month-label {
+  align-self: end;
+  padding-bottom: 3px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.55);
+  white-space: nowrap;
+}
+
+.stats-day-label {
+  padding-right: 4px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.55);
+  white-space: nowrap;
+  text-align: right;
+}
+
+.stats-cell {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.stats-cell.tier-1 {
+  background: #1f4d2b;
+}
+
+.stats-cell.tier-2 {
+  background: #2f7a3a;
+}
+
+.stats-cell.tier-3 {
+  background: #3fa84a;
+}
+
+.stats-cell.tier-4 {
+  background: #5ad672;
+}
+
+.stats-cell.tier-future {
+  visibility: hidden;
 }
 
 .home-link {
