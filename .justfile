@@ -4,6 +4,15 @@ install:
     npm install
 
 serve: install
+    #!/usr/bin/env bash
+    set -euo pipefail
+    for port in 3999 8888; do
+        pid=$(lsof -ti "tcp:$port" -sTCP:LISTEN 2>/dev/null || true)
+        if [ -n "$pid" ]; then
+            echo "Port $port is already in use (pid $pid) — killing stale dev server."
+            kill $pid
+        fi
+    done
     npx netlify dev
 
 data:
