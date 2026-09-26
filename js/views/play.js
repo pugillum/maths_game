@@ -175,8 +175,11 @@ export function renderPlay(container) {
       ball.style.setProperty("--y", pos.y + "px");
       ball.style.setProperty("--drift-x", rand(6, 16).toFixed(1) + "px");
       ball.style.setProperty("--drift-y", rand(8, 20).toFixed(1) + "px");
-      ball.style.setProperty("--float-dur", rand(2.4, 4).toFixed(2) + "s");
-      ball.style.setProperty("--float-delay", rand(0, 1.5).toFixed(2) + "s");
+      // Negative delay starts each ball mid-cycle, so it floats immediately instead of
+      // sitting still and then snapping to the first keyframe.
+      const floatDur = rand(2.4, 4);
+      ball.style.setProperty("--float-dur", floatDur.toFixed(2) + "s");
+      ball.style.setProperty("--float-delay", (-rand(0, floatDur * 2)).toFixed(2) + "s");
 
       ball.dataset.value = value;
       ball.addEventListener("pointerdown", onBallTap, { passive: true });
