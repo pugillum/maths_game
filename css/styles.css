@@ -212,19 +212,19 @@ body {
 }
 
 .stats-cell.tier-1 {
-  background: #1f4d2b;
+  background: #ffd6ea;
 }
 
 .stats-cell.tier-2 {
-  background: #2f7a3a;
+  background: #ffa8d2;
 }
 
 .stats-cell.tier-3 {
-  background: #3fa84a;
+  background: #ff6fb5;
 }
 
 .stats-cell.tier-4 {
-  background: #5ad672;
+  background: #ff2d95;
 }
 
 .stats-cell.tier-future {

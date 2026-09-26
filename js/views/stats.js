@@ -46,9 +46,9 @@ function monthLabelsFor(columns) {
 
 function tierFor(minutes) {
   if (minutes <= 0) return 0;
-  if (minutes < 5) return 1;
-  if (minutes < 10) return 2;
-  if (minutes < 15) return 3;
+  if (minutes < 1) return 1;
+  if (minutes < 2) return 2;
+  if (minutes < 5) return 3;
   return 4;
 }
 
@@ -89,7 +89,7 @@ export function renderStats(container) {
     .then((data) => {
       const days = data.days || {};
       const streak = computeStreak(days);
-      streakText.textContent = streak === 1 ? "1 day streak" : `${streak} day streak`;
+      streakText.textContent = streak === 1 ? "🔥 1 day streak" : `🔥 ${streak} day streak`;
 
       const columns = buildColumns(days);
       const monthLabels = monthLabelsFor(columns);

@@ -17,6 +17,8 @@ const BALL_COLORS = [
 const PRAISE = [
   "Nice one!", "Great job!", "Correct!", "You got it!",
   "Awesome!", "Brilliant!", "Well done!", "Superstar!",
+  "Go Girl!", "Fantastic!", "Excellent!", "You're a star!",
+  "Keep it up!", "Way to go!", "You're amazing!"
 ];
 
 function rand(min, max) {
